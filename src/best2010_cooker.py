@@ -136,6 +136,7 @@ def report(data, gold_data):
     n_sents = len(sents)
 
     ss = [s.split() for s in sents]
+    ss_str = [''.join(s) for s in ss]
     ws = [w for s in ss for w in s]
     n_words = len(ws)
 
@@ -143,11 +144,11 @@ def report(data, gold_data):
     n_chars = len(cs)
 
     max_wps = len(max(ss, key=len))
-    max_cps = sum([len(c) for w in max(ss, key=len) for c in w])
+    max_cps = len(max(ss_str, key=len))
     max_cpw = len(max(ws, key=len))
 
     min_wps = len(min(ss, key=len))
-    min_cps = sum([len(c) for w in min(ss, key=len) for c in w])
+    min_cps = len(min(ss_str, key=len))
     min_cpw = len(min(ws, key=len))
 
     avg_wps = n_words / n_sents     # words/sentence
