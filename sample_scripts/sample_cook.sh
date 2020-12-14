@@ -13,3 +13,5 @@ python3 src/best2010_cooker.py \
     --input_data_format $INPUT_FORMAT \
     --output_data_format $OUTPUT_FORMAT \
     --sentence_len_threshold $SENTENCE_LEN_THRESHOLD \
+    --gen_ne_vocab \
+    --gen_abbr_vocab \
