@@ -58,6 +58,7 @@ usage: best2010_cooker.py [-h] [--quiet] --input_data INPUT_DATA
   
   save cooked data: cooked/cooked_best2010_20201214_1706.sl
   save cooked data: cooked/cooked_best2010_20201214_1706.sl
+  save cooked abbreviation data: cooked/cooked_best2010_20201214_1706.ne.vocab
   save cooked abbreviation data: cooked/cooked_best2010_20201214_1706.abbr.vocab
 
   ### report
