@@ -83,6 +83,9 @@ def parse_args():
         '--gen_abbr_vocab',
         action='store_true',
         help='Specify to generate abbreviation (ABBR) vocabulary')
+    parser.add_argument('--include_empty_line',
+                        action='store_true',
+                        help='Specify to inclde empty line')
     args = parser.parse_args()
     return args
 
@@ -117,17 +120,17 @@ def load_txt_data(path):
     return data
 
 
-def gen_gold_data(data, data_format, threshold=1):
+def gen_gold_data(data, data_format, threshold=1, include_empty_line=False):
     if data_format == SL_FORMAT:
-        data = gen_gold_data_SL(data, threshold)
+        data = gen_gold_data_SL(data, threshold, include_empty_line)
 
     elif data_format == WL_FORMAT:
-        data = gen_gold_data_WL(data, threshold)
+        data = gen_gold_data_WL(data, threshold, include_empty_line)
 
     return data
 
 
-def gen_gold_data_SL(data, threshold=1):
+def gen_gold_data_SL(data, threshold=1, include_empty_line=False):
     gs = []  # gold data
     ls = data  # lines
     TAG_PATTERN_RE = re.compile(TAG_PATTERN)
@@ -135,15 +138,17 @@ def gen_gold_data_SL(data, threshold=1):
         l = re.sub(TAG_PATTERN_RE, '', l)  # remove tags <tag> -> ''
         l = remove_delimiters(l)
         ws = l.split(SL_TOKEN_DELIM)  # words sequence
-        if len(ws) < threshold or (len(ws) < 2 and len(
-                ws[0]) < 1):  # filter by threshold and ignore empty line
+        if len(ws) < threshold:  # filter by threshold
+            continue
+        if not include_empty_line and (len(ws) < 2 and
+                                       len(ws[0]) < 1):  # to ignore empty line
             continue
         wl = SL_TOKEN_DELIM.join(ws)
         gs.append(wl)
     return gs
 
 
-def gen_gold_data_WL(data, threshold=1):
+def gen_gold_data_WL(data, threshold=1, include_empty_line=False):
     gs = []  # gold data
     ls = data  # lines
     TAG_PATTERN_RE = re.compile(TAG_PATTERN)
@@ -151,8 +156,10 @@ def gen_gold_data_WL(data, threshold=1):
         l = re.sub(TAG_PATTERN_RE, '', l)  # remove tags <tag> -> ''
         l = remove_delimiters(l)
         ws = l.split(SL_TOKEN_DELIM)  # words sequence
-        if len(ws) < threshold or (len(ws) < 2 and len(
-                ws[0]) < 1):  # filter by threshold and ignore empty line
+        if len(ws) < threshold:  # filter by threshold
+            continue
+        if not include_empty_line and (len(ws) < 2 and
+                                       len(ws[0]) < 1):  # to ignore empty line
             continue
         wl = WL_TOKEN_DELIM.join(
             ws) + WL_TOKEN_DELIM  # concat with WL_DELIM for output data
@@ -251,7 +258,8 @@ def cook(args):
     data = load_data(data_path, data_format=args.input_data_format)
     gold_data = gen_gold_data(data,
                               data_format=args.output_data_format,
-                              threshold=args.sentence_len_threshold)
+                              threshold=args.sentence_len_threshold,
+                              include_empty_line=args.include_empty_line)
 
     ne_vocab = None
     abbr_vocab = None

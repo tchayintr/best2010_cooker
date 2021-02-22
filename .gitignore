@@ -1,6 +1,7 @@
 # folders
 ######################
 data/*
+!data/best2010-sample.txt
 
 # files
 ######################

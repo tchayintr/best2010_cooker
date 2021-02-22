@@ -1,7 +1,7 @@
 ############################################
 # txt input
 
-INPUT_DATA=data/best2010-full.txt
+INPUT_DATA=data/best2010-sample.txt
 OUTPUT_DATA=cooked/
 INPUT_FORMAT=txt
 OUTPUT_FORMAT=sl
@@ -15,3 +15,5 @@ python3 src/best2010_cooker.py \
     --sentence_len_threshold $SENTENCE_LEN_THRESHOLD \
     --gen_ne_vocab \
     --gen_abbr_vocab \
+    # --include_empty_line \
+    # --quiet

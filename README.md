@@ -15,6 +15,7 @@ usage: best2010_cooker.py [-h] [--quiet] --input_data INPUT_DATA
                           [--output_data_format OUTPUT_DATA_FORMAT]
                           [--sentence_len_threshold SENTENCE_LEN_THRESHOLD]
                           [--gen_ne_vocab] [--gen_abbr_vocab]
+                          [--include_empty_line]
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -34,6 +35,7 @@ optional arguments:
                         lower than the threshold are ignored (Default: 1)
   --gen_ne_vocab        Specify to generate NE vocabulary
   --gen_abbr_vocab      Specify to generate abbreviation (ABBR) vocabulary
+  --include_empty_line  Specify to inclde empty line
 usage: best2010_cooker.py [-h] [--quiet] --input_data INPUT_DATA
                           [--output_data OUTPUT_DATA]
                           [--input_data_format INPUT_DATA_FORMAT]
