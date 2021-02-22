@@ -36,11 +36,6 @@ optional arguments:
   --gen_ne_vocab        Specify to generate NE vocabulary
   --gen_abbr_vocab      Specify to generate abbreviation (ABBR) vocabulary
   --include_empty_line  Specify to inclde empty line
-usage: best2010_cooker.py [-h] [--quiet] --input_data INPUT_DATA
-                          [--output_data OUTPUT_DATA]
-                          [--input_data_format INPUT_DATA_FORMAT]
-                          [--output_data_format OUTPUT_DATA_FORMAT]
-                          [--sentence_len_threshold SENTENCE_LEN_THRESHOLD]
   ```
 
   #### Example outputs
@@ -56,9 +51,9 @@ usage: best2010_cooker.py [-h] [--quiet] --input_data INPUT_DATA
   # sentence_len_threshold=1
   # gen_ne_vocab=True
   # gen_abbr_vocab=True
+  # include_empty_line=False
 
   
-  save cooked data: cooked/cooked_best2010_20201214_1706.sl
   save cooked data: cooked/cooked_best2010_20201214_1706.sl
   save cooked abbreviation data: cooked/cooked_best2010_20201214_1706.ne.vocab
   save cooked abbreviation data: cooked/cooked_best2010_20201214_1706.abbr.vocab
