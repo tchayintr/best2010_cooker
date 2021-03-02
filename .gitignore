@@ -1,11 +1,20 @@
 # folders
 ######################
 data/*
-!data/best2010-sample.txt
+sample_scripts/*
+cooked/*
 
 # files
 ######################
 !*.gitkeep
+!data/best2010-sample.txt
+!sample_scripts/sample_cook.sh
+!cooked/cooked_best2010_20210302_1201.sl
+!cooked/cooked_best2010_20210302_1201.train.sl
+!cooked/cooked_best2010_20210302_1201.valid.sl
+!cooked/cooked_best2010_20210302_1201.test.sl
+!cooked/cooked_best2010_20210302_1201.ab.vocab
+!cooked/cooked_best2010_20210302_1201.ne.vocab
 
 # caches
 ######################
