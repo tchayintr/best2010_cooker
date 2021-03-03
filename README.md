@@ -90,29 +90,29 @@ See `src/divs.py` for train, validation, and test indices referred to the origin
 #### Denoise (noisy data based on the original data)
 13 cases (34 lines) were found to be noise data (incorrect annotation).
 Each number refers to the line number in the original data
-- <NE>w1</NE → <NE>w1</NE>
+- ```<NE>w1</NE → <NE>w1</NE>```
     - 5558 5559 5562 5913 6547 6567 6717 6737 
-- <NE>w1>w2</NE> → <NE>w1 w2</NE>
+- ```<NE>w1>w2</NE> → <NE>w1 w2</NE>```
     - 5603
-- <NE>NE>w1</NE> → <NE>w1</NE>
+- ```<NE>NE>w1</NE> → <NE>w1</NE>```
     - 8153 80697 81086 81108 82631
-- <NE>w1</NE</NE> → <NE>w1</NE>
+- ```<NE>w1</NE</NE> → <NE>w1</NE>```
     - 22548 80856 118267
-- <NE>w1/NE></NE> → <NE>w1</NE>
+- ```<NE>w1/NE></NE> → <NE>w1</NE>```
     - 31526 79952 80137
-- <NE>w1<w2</NE> → <NE>w1w2</NE>
+- ```<NE>w1<w2</NE> → <NE>w1w2</NE>```
     - 13049 45835
-- AB>w1</AB> → <AB>w1</AB>
+- ```AB>w1</AB> → <AB>w1</AB>```
     - 54419
-- <NE>w1></NE> → <NE>w1</NE>
+- ```<NE>w1></NE> → <NE>w1</NE>```
     - 56893 91142 91144 91145
-- <NE>w1</NE>w2</NE> → <NE>w1w2</NE>
+- ```<NE>w1</NE>w2</NE> → <NE>w1w2</NE>```
     - 80145
-- <NE>AB>w1w2</NE> → <NE><AB>w1</AB>w2</NE>
+- ```<NE>AB>w1w2</NE> → <NE><AB>w1</AB>w2</NE>```
     - 82274 84065 89645
-- <NE>w1</NE</NE>> → <NE>w1</NE>
+- ```<NE>w1</NE</NE>> → <NE>w1</NE>```
     - 95647
-- <NEw1</NE> → <NE>w1</NE>
+- ```<NEw1</NE> → <NE>w1</NE>```
     - 132798
-- <NE>MERGE>w1</NE> → <NE>w1</NE>
+- ```<NE>MERGE>w1</NE> → <NE>w1</NE>```
     - 144226
