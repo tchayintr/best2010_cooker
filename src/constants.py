@@ -1,4 +1,4 @@
-# ORCHID delimiters
+# BEST2010 delimiters
 
 W_DELIM = '|'  # word delimiter
 CT_DELIM = '| |'  # context delimiter
