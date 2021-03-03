@@ -9,12 +9,18 @@ cooked/*
 !*.gitkeep
 !data/best2010-sample.txt
 !sample_scripts/sample_cook.sh
-!cooked/cooked_best2010_20210302_1201.sl
-!cooked/cooked_best2010_20210302_1201.train.sl
-!cooked/cooked_best2010_20210302_1201.valid.sl
-!cooked/cooked_best2010_20210302_1201.test.sl
-!cooked/cooked_best2010_20210302_1201.ab.vocab
-!cooked/cooked_best2010_20210302_1201.ne.vocab
+!cooked/cooked_best2010_20210303_2018.ab.vocab
+!cooked/cooked_best2010_20210303_2018.ne.vocab
+!cooked/cooked_best2010_20210303_2018.sl
+!cooked/cooked_best2010_20210303_2018.test.ab.vocab
+!cooked/cooked_best2010_20210303_2018.test.ne.vocab
+!cooked/cooked_best2010_20210303_2018.test.sl
+!cooked/cooked_best2010_20210303_2018.train.ab.vocab
+!cooked/cooked_best2010_20210303_2018.train.ne.vocab
+!cooked/cooked_best2010_20210303_2018.train.sl
+!cooked/cooked_best2010_20210303_2018.valid.ab.vocab
+!cooked/cooked_best2010_20210303_2018.valid.ne.vocab
+!cooked/cooked_best2010_20210303_2018.valid.sl
 
 # caches
 ######################

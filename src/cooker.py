@@ -9,6 +9,7 @@
 '''
 
 from datetime import datetime
+import os
 import re
 import sys
 
@@ -130,9 +131,15 @@ class Cooker(object):
     def summarize(self,
                   data,
                   gold_data,
-                  train_data=None,
-                  valid_data=None,
-                  test_data=None,
+                  train_gdata=None,
+                  valid_gdata=None,
+                  test_gdata=None,
+                  train_ne_vocab=None,
+                  valid_ne_vocab=None,
+                  test_ne_vocab=None,
+                  train_ab_vocab=None,
+                  valid_ab_vocab=None,
+                  test_ab_vocab=None,
                   ne_vocab=None,
                   ab_vocab=None):
         lines = data
@@ -165,13 +172,28 @@ class Cooker(object):
         self.log('# [PRE] line: {} ...'.format(len(data)))
         self.log('# [PRE] sent: {} ...'.format(n_psents))
         self.log('# [POST] sent: {} ...'.format(n_sents))
-        self.log('# [POST] train-div: {} ...'.format(len(train_data)))
-        self.log('# [POST] valid-div: {} ...'.format(len(valid_data)))
-        self.log('# [POST] test-div: {} ...'.format(len(test_data)))
+        self.log('# [POST] train-div: {} ...'.format(
+            len(train_gdata))) if train_gdata else None
+        self.log('# [POST] valid-div: {} ...'.format(
+            len(valid_gdata))) if valid_gdata else None
+        self.log('# [POST] test-div: {} ...'.format(
+            len(test_gdata))) if test_gdata else None
         self.log('# [POST] ne: {} ...'.format(
             len(ne_vocab))) if ne_vocab else None
         self.log('# [POST] abbreviation: {} ...'.format(
             len(ab_vocab))) if ab_vocab else None
+        self.log('# [POST] train-ne: {} ...'.format(
+            len(train_ne_vocab))) if train_ne_vocab else None
+        self.log('# [POST] valid-ne: {} ...'.format(
+            len(valid_ne_vocab))) if valid_ne_vocab else None
+        self.log('# [POST] test-ne: {} ...'.format(
+            len(test_ne_vocab))) if test_ne_vocab else None
+        self.log('# [POST] train-ab: {} ...'.format(
+            len(train_ab_vocab))) if train_ab_vocab else None
+        self.log('# [POST] valid-ab: {} ...'.format(
+            len(valid_ab_vocab))) if valid_ab_vocab else None
+        self.log('# [POST] test-ab: {} ...'.format(
+            len(test_ab_vocab))) if test_ab_vocab else None
         self.log('# [POST] word: {} ...'.format(n_words))
         self.log('# [POST] char: {} ...'.format(n_chars))
         self.log('# [POST] words/sent: min={} max={} avg={}'.format(
@@ -205,21 +227,60 @@ class Cooker(object):
             threshold=self.args.sentence_len_threshold,
             exclude_empty_line=self.args.exclude_empty_line)
 
+        # generate train, valid, test divisions along with their NEs and ABs
+        train_gdata = None
+        valid_gdata = None
+        test_gdata = None
+
+        train_ne_vocab = None
+        valid_ne_vocab = None
+        test_ne_vocab = None
+
+        train_ab_vocab = None
+        valid_ab_vocab = None
+        test_ab_vocab = None
+        if self.args.gen_div_data:
+            # train_data, valid_data, test_data = self.gen_div_data(gold_data)
+            train_data, valid_data, test_data = self.gen_div_data(data)
+            train_gdata = self.gen_gold_data(
+                train_data,
+                data_format=self.args.output_data_format,
+                threshold=self.args.sentence_len_threshold,
+                exclude_empty_line=self.args.exclude_empty_line)
+            valid_gdata = self.gen_gold_data(
+                valid_data,
+                data_format=self.args.output_data_format,
+                threshold=self.args.sentence_len_threshold,
+                exclude_empty_line=self.args.exclude_empty_line)
+            test_gdata = self.gen_gold_data(
+                test_data,
+                data_format=self.args.output_data_format,
+                threshold=self.args.sentence_len_threshold,
+                exclude_empty_line=self.args.exclude_empty_line)
+            if self.args.gen_ne_vocab:
+                train_ne_vocab = self.gen_ne_vocab(train_data)
+                valid_ne_vocab = self.gen_ne_vocab(valid_data)
+                test_ne_vocab = self.gen_ne_vocab(test_data)
+            if self.gen_ab_vocab:
+                train_ab_vocab = self.gen_ab_vocab(train_data)
+                valid_ab_vocab = self.gen_ab_vocab(valid_data)
+                test_ab_vocab = self.gen_ab_vocab(test_data)
+
+        # generate global NE and AB
         ne_vocab = None
         ab_vocab = None
-        train_data = None
-        valid_data = None
-        test_data = None
-        if self.args.gen_div_data:
-            train_data, valid_data, test_data = self.gen_div_data(gold_data)
         if self.args.gen_ne_vocab:
             ne_vocab = self.gen_ne_vocab(data)
         if self.args.gen_ab_vocab:
             ab_vocab = self.gen_ab_vocab(data)
 
+        # print to files
         if self.args.output_data:
+            output_data_prefix_path = self.args.output_data
+            if not os.path.exists(output_data_prefix_path):
+                os.makedirs(output_data_prefix_path)
             output_data_path = '{}/cooked_best2010_{}.{}'.format(
-                self.args.output_data, start_time,
+                output_data_prefix_path, start_time,
                 self.args.output_data_format)
             with open(output_data_path, 'w', encoding='utf8') as f:
                 for gd in gold_data:
@@ -229,35 +290,105 @@ class Cooker(object):
 
             if self.args.gen_div_data:
                 output_train_data_path = '{}/cooked_best2010_{}.{}.{}'.format(
-                    self.args.output_data, start_time,
+                    output_data_prefix_path, start_time,
                     constants.BEST2010_TRAIN_DIV, constants.SL_FORMAT)
                 output_valid_data_path = '{}/cooked_best2010_{}.{}.{}'.format(
-                    self.args.output_data, start_time,
+                    output_data_prefix_path, start_time,
                     constants.BEST2010_VALID_DIV, constants.SL_FORMAT)
                 output_test_data_path = '{}/cooked_best2010_{}.{}.{}'.format(
-                    self.args.output_data, start_time,
+                    output_data_prefix_path, start_time,
                     constants.BEST2010_TEST_DIV, constants.SL_FORMAT)
                 with open(output_train_data_path, 'w', encoding='utf8') as f:
-                    for trd in train_data:
+                    for trd in train_gdata:
                         print(trd, file=f)
                     if not self.args.quiet:
                         self.log('save cooked train data: {}'.format(
                             output_train_data_path))
                 with open(output_valid_data_path, 'w', encoding='utf8') as f:
-                    for vad in valid_data:
+                    for vad in valid_gdata:
                         print(vad, file=f)
                     if not self.args.quiet:
                         self.log('save cooked valid data: {}'.format(
                             output_valid_data_path))
                 with open(output_test_data_path, 'w', encoding='utf8') as f:
-                    for ted in test_data:
+                    for ted in test_gdata:
                         print(ted, file=f)
                     if not self.args.quiet:
                         self.log('save cooked test data: {}'.format(
                             output_test_data_path))
+
+                if self.args.gen_ne_vocab:
+                    output_train_ne_data_path = '{}/cooked_best2010_{}.{}.{}.{}'.format(
+                        output_data_prefix_path, start_time,
+                        constants.BEST2010_TRAIN_DIV, constants.NE_DATA_FORMAT,
+                        constants.VOCAB_DATA_FORMAT)
+                    output_valid_ne_data_path = '{}/cooked_best2010_{}.{}.{}.{}'.format(
+                        output_data_prefix_path, start_time,
+                        constants.BEST2010_VALID_DIV, constants.NE_DATA_FORMAT,
+                        constants.VOCAB_DATA_FORMAT)
+                    output_test_ne_data_path = '{}/cooked_best2010_{}.{}.{}.{}'.format(
+                        output_data_prefix_path, start_time,
+                        constants.BEST2010_TEST_DIV, constants.NE_DATA_FORMAT,
+                        constants.VOCAB_DATA_FORMAT)
+                    with open(output_train_ne_data_path, 'w',
+                              encoding='utf8') as f:
+                        for train_ne in train_ne_vocab:
+                            print(train_ne, file=f)
+                        if not self.args.quiet:
+                            self.log('save cooked train NE data: {}'.format(
+                                output_train_ne_data_path))
+                    with open(output_valid_ne_data_path, 'w',
+                              encoding='utf8') as f:
+                        for valid_ne in valid_ne_vocab:
+                            print(valid_ne, file=f)
+                        if not self.args.quiet:
+                            self.log('save cooked valid NE data: {}'.format(
+                                output_valid_ne_data_path))
+                    with open(output_test_ne_data_path, 'w',
+                              encoding='utf8') as f:
+                        for test_ne in test_ne_vocab:
+                            print(test_ne, file=f)
+                        if not self.args.quiet:
+                            self.log('save cooked test NE data: {}'.format(
+                                output_test_ne_data_path))
+                if self.args.gen_ab_vocab:
+                    output_train_ab_data_path = '{}/cooked_best2010_{}.{}.{}.{}'.format(
+                        output_data_prefix_path, start_time,
+                        constants.BEST2010_TRAIN_DIV, constants.AB_DATA_FORMAT,
+                        constants.VOCAB_DATA_FORMAT)
+                    output_valid_ab_data_path = '{}/cooked_best2010_{}.{}.{}.{}'.format(
+                        output_data_prefix_path, start_time,
+                        constants.BEST2010_VALID_DIV, constants.AB_DATA_FORMAT,
+                        constants.VOCAB_DATA_FORMAT)
+                    output_test_ab_data_path = '{}/cooked_best2010_{}.{}.{}.{}'.format(
+                        output_data_prefix_path, start_time,
+                        constants.BEST2010_TEST_DIV, constants.AB_DATA_FORMAT,
+                        constants.VOCAB_DATA_FORMAT)
+                    with open(output_train_ab_data_path, 'w',
+                              encoding='utf8') as f:
+                        for train_ab in train_ab_vocab:
+                            print(train_ab, file=f)
+                        if not self.args.quiet:
+                            self.log('save cooked train AB data: {}'.format(
+                                output_train_ab_data_path))
+                    with open(output_valid_ab_data_path, 'w',
+                              encoding='utf8') as f:
+                        for valid_ab in valid_ab_vocab:
+                            print(valid_ab, file=f)
+                        if not self.args.quiet:
+                            self.log('save cooked valid AB  data: {}'.format(
+                                output_valid_ab_data_path))
+                    with open(output_test_ab_data_path, 'w',
+                              encoding='utf8') as f:
+                        for test_ab in test_ab_vocab:
+                            print(test_ab, file=f)
+                        if not self.args.quiet:
+                            self.log('save cooked test AB data: {}'.format(
+                                output_test_ab_data_path))
+
             if self.args.gen_ne_vocab:
                 output_ne_data_path = '{}/cooked_best2010_{}.{}.{}'.format(
-                    self.args.output_data, start_time,
+                    output_data_prefix_path, start_time,
                     constants.NE_DATA_FORMAT, constants.VOCAB_DATA_FORMAT)
                 with open(output_ne_data_path, 'w', encoding='utf8') as f:
                     for ne in ne_vocab:
@@ -267,7 +398,7 @@ class Cooker(object):
                             output_ne_data_path))
             if self.args.gen_ab_vocab:
                 output_ab_data_path = '{}/cooked_best2010_{}.{}.{}'.format(
-                    self.args.output_data, start_time,
+                    output_data_prefix_path, start_time,
                     constants.AB_DATA_FORMAT, constants.VOCAB_DATA_FORMAT)
                 with open(output_ab_data_path, 'w', encoding='utf8') as f:
                     for abbr in ab_vocab:
@@ -277,8 +408,10 @@ class Cooker(object):
                             output_ab_data_path))
 
         if not self.args.quiet:
-            self.summarize(data, gold_data, train_data, valid_data, test_data,
-                           ne_vocab, ab_vocab)
+            self.summarize(data, gold_data, train_gdata, valid_gdata,
+                           test_gdata, train_ne_vocab, valid_ne_vocab,
+                           test_ne_vocab, train_ab_vocab, valid_ab_vocab,
+                           test_ab_vocab, ne_vocab, ab_vocab)
             timer.stop()
             print('Elapsed time: {:6f} sec.'.format(timer.elapsed),
                   file=sys.stderr)

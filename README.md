@@ -44,8 +44,7 @@ optional arguments:
 
 #### Example outputs
 ```
-Start time: 20210302_1201
-(core) chayintr@cpu06:~/workspace/scripts/cooker/best2010$ ./sample_scripts/sample_cook.sh
+Start time: 20210303_2018
 
 ### arguments
 # quiet=False
@@ -60,12 +59,18 @@ Start time: 20210302_1201
 # exclude_empty_line=False
 # gen_div_data=True
 
-save cooked data: cooked/cooked_best2010_20210302_1201.sl
-save cooked train data: cooked/cooked_best2010_20210302_1201.train.sl
-save cooked valid data: cooked/cooked_best2010_20210302_1201.valid.sl
-save cooked test data: cooked/cooked_best2010_20210302_1201.test.sl
-save cooked NE data: cooked/cooked_best2010_20210302_1201.ne.vocab
-save cooked abbreviation data: cooked/cooked_best2010_20210302_1201.ab.vocab
+save cooked data: cooked/cooked_best2010_20210303_2018.sl
+save cooked train data: cooked/cooked_best2010_20210303_2018.train.sl
+save cooked valid data: cooked/cooked_best2010_20210303_2018.valid.sl
+save cooked test data: cooked/cooked_best2010_20210303_2018.test.sl
+save cooked train NE data: cooked/cooked_best2010_20210303_2018.train.ne.vocab
+save cooked valid NE data: cooked/cooked_best2010_20210303_2018.valid.ne.vocab
+save cooked test NE data: cooked/cooked_best2010_20210303_2018.test.ne.vocab
+save cooked train AB data: cooked/cooked_best2010_20210303_2018.train.ab.vocab
+save cooked valid AB  data: cooked/cooked_best2010_20210303_2018.valid.ab.vocab
+save cooked test AB data: cooked/cooked_best2010_20210303_2018.test.ab.vocab
+save cooked NE data: cooked/cooked_best2010_20210303_2018.ne.vocab
+save cooked abbreviation data: cooked/cooked_best2010_20210303_2018.ab.vocab
 ### report
 # [PRE] line: 50 ...
 # [PRE] sent: 50 ...
@@ -75,12 +80,14 @@ save cooked abbreviation data: cooked/cooked_best2010_20210302_1201.ab.vocab
 # [POST] test-div: 2 ...
 # [POST] ne: 7 ...
 # [POST] abbreviation: 1 ...
+# [POST] train-ne: 7 ...
+# [POST] train-ab: 1 ...
 # [POST] word: 4020 ...
 # [POST] char: 15977 ...
 # [POST] words/sent: min=2 max=177 avg=80.4
 # [POST] chars/sent: min=6 max=708 avg=319.54
 # [POST] chars/word: min=1 max=20 avg=3.9743781094527364
-Elapsed time: 0.112333 sec.
+Elapsed time: 0.106086 sec.
 ```
 
 #### Data divisions (shuffled)
