@@ -14,8 +14,8 @@ usage: cooker.py [-h] [--quiet] --input_data INPUT_DATA
                  [--input_data_format INPUT_DATA_FORMAT]
                  [--output_data_format OUTPUT_DATA_FORMAT]
                  [--sentence_len_threshold SENTENCE_LEN_THRESHOLD] [--denoise]
-                 [--gen_ne_vocab] [--gen_ab_vocab] [--exclude_empty_line]
-                 [--gen_div_data]
+                 [--gen_common_vocab] [--gen_ne_vocab] [--gen_ab_vocab]
+                 [--exclude_empty_line] [--gen_div_data]
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -35,6 +35,7 @@ optional arguments:
                         lower than the threshold are ignored (Default: 1)
   --denoise             Specify to deeply clean the input data (original data
                         denoising) see README.md for more details
+  --gen_common_vocab    Specify to generate common vocabulary
   --gen_ne_vocab        Specify to generate NE vocabulary
   --gen_ab_vocab        Specify to generate abbreviation (AB) vocabulary
   --exclude_empty_line  Specify to exclude empty line
@@ -44,7 +45,7 @@ optional arguments:
 
 #### Example outputs
 ```
-Start time: 20210303_2018
+Start time: 20210609_1919
 
 ### arguments
 # quiet=False
@@ -54,23 +55,28 @@ Start time: 20210303_2018
 # output_data_format=sl
 # sentence_len_threshold=1
 # denoise=True
+# gen_common_vocab=True
 # gen_ne_vocab=True
 # gen_ab_vocab=True
 # exclude_empty_line=False
 # gen_div_data=True
 
-save cooked data: cooked/cooked_best2010_20210303_2018.sl
-save cooked train data: cooked/cooked_best2010_20210303_2018.train.sl
-save cooked valid data: cooked/cooked_best2010_20210303_2018.valid.sl
-save cooked test data: cooked/cooked_best2010_20210303_2018.test.sl
-save cooked train NE data: cooked/cooked_best2010_20210303_2018.train.ne.vocab
-save cooked valid NE data: cooked/cooked_best2010_20210303_2018.valid.ne.vocab
-save cooked test NE data: cooked/cooked_best2010_20210303_2018.test.ne.vocab
-save cooked train AB data: cooked/cooked_best2010_20210303_2018.train.ab.vocab
-save cooked valid AB  data: cooked/cooked_best2010_20210303_2018.valid.ab.vocab
-save cooked test AB data: cooked/cooked_best2010_20210303_2018.test.ab.vocab
-save cooked NE data: cooked/cooked_best2010_20210303_2018.ne.vocab
-save cooked abbreviation data: cooked/cooked_best2010_20210303_2018.ab.vocab
+save cooked data: cooked/20210609_1919/cooked_best2010_20210609_1919.sl
+save cooked train data: cooked/20210609_1919/cooked_best2010_20210609_1919.train.sl
+save cooked valid data: cooked/20210609_1919/cooked_best2010_20210609_1919.valid.sl
+save cooked test data: cooked/20210609_1919/cooked_best2010_20210609_1919.test.sl
+save cooked train common vocab data: cooked/20210609_1919/cooked_best2010_20210609_1919.train.vocab
+save cooked valid common vocab data: cooked/20210609_1919/cooked_best2010_20210609_1919.valid.vocab
+save cooked test common vocab data: cooked/20210609_1919/cooked_best2010_20210609_1919.test.vocab
+save cooked train NE data: cooked/20210609_1919/cooked_best2010_20210609_1919.train.ne.vocab
+save cooked valid NE data: cooked/20210609_1919/cooked_best2010_20210609_1919.valid.ne.vocab
+save cooked test NE data: cooked/20210609_1919/cooked_best2010_20210609_1919.test.ne.vocab
+save cooked train AB data: cooked/20210609_1919/cooked_best2010_20210609_1919.train.ab.vocab
+save cooked valid AB  data: cooked/20210609_1919/cooked_best2010_20210609_1919.valid.ab.vocab
+save cooked test AB data: cooked/20210609_1919/cooked_best2010_20210609_1919.test.ab.vocab
+save cooked common vocab data: cooked/20210609_1919/cooked_best2010_20210609_1919.vocab
+save cooked NE data: cooked/20210609_1919/cooked_best2010_20210609_1919.ne.vocab
+save cooked abbreviation data: cooked/20210609_1919/cooked_best2010_20210609_1919.ab.vocab
 ### report
 # [PRE] line: 50 ...
 # [PRE] sent: 50 ...
@@ -78,8 +84,12 @@ save cooked abbreviation data: cooked/cooked_best2010_20210303_2018.ab.vocab
 # [POST] train-div: 44 ...
 # [POST] valid-div: 4 ...
 # [POST] test-div: 2 ...
+# [POST] common vocab: 642 ...
 # [POST] ne: 7 ...
 # [POST] abbreviation: 1 ...
+# [POST] train-vocab: 586 ...
+# [POST] valid-vocab: 191 ...
+# [POST] test-vocab: 89 ...
 # [POST] train-ne: 7 ...
 # [POST] train-ab: 1 ...
 # [POST] word: 4020 ...
@@ -87,7 +97,7 @@ save cooked abbreviation data: cooked/cooked_best2010_20210303_2018.ab.vocab
 # [POST] words/sent: min=2 max=177 avg=80.4
 # [POST] chars/sent: min=6 max=708 avg=319.54
 # [POST] chars/word: min=1 max=20 avg=3.9743781094527364
-Elapsed time: 0.106086 sec.
+Elapsed time: 0.109500 sec.
 ```
 
 #### Data divisions (shuffled)
