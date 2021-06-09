@@ -14,6 +14,7 @@ python3 src/cooker.py \
     --output_data_format $OUTPUT_FORMAT \
     --sentence_len_threshold $SENTENCE_LEN_THRESHOLD \
     --denoise \
+    --gen_common_vocab \
     --gen_ne_vocab \
     --gen_ab_vocab \
     --gen_div_data \

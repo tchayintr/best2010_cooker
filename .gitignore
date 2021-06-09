@@ -3,24 +3,30 @@
 data/*
 sample_scripts/*
 cooked/*
+!cooked/20210609_1919/
+cooked/20210609_1919/*
 
 # files
 ######################
 !*.gitkeep
 !data/best2010-sample.txt
 !sample_scripts/sample_cook.sh
-!cooked/cooked_best2010_20210303_2018.ab.vocab
-!cooked/cooked_best2010_20210303_2018.ne.vocab
-!cooked/cooked_best2010_20210303_2018.sl
-!cooked/cooked_best2010_20210303_2018.test.ab.vocab
-!cooked/cooked_best2010_20210303_2018.test.ne.vocab
-!cooked/cooked_best2010_20210303_2018.test.sl
-!cooked/cooked_best2010_20210303_2018.train.ab.vocab
-!cooked/cooked_best2010_20210303_2018.train.ne.vocab
-!cooked/cooked_best2010_20210303_2018.train.sl
-!cooked/cooked_best2010_20210303_2018.valid.ab.vocab
-!cooked/cooked_best2010_20210303_2018.valid.ne.vocab
-!cooked/cooked_best2010_20210303_2018.valid.sl
+!cooked/20210609_1919/cooked_best2010_20210609_1919.ab.vocab
+!cooked/20210609_1919/cooked_best2010_20210609_1919.ne.vocab
+!cooked/20210609_1919/cooked_best2010_20210609_1919.sl
+!cooked/20210609_1919/cooked_best2010_20210609_1919.test.ab.vocab
+!cooked/20210609_1919/cooked_best2010_20210609_1919.test.ne.vocab
+!cooked/20210609_1919/cooked_best2010_20210609_1919.test.sl
+!cooked/20210609_1919/cooked_best2010_20210609_1919.test.vocab
+!cooked/20210609_1919/cooked_best2010_20210609_1919.train.ab.vocab
+!cooked/20210609_1919/cooked_best2010_20210609_1919.train.ne.vocab
+!cooked/20210609_1919/cooked_best2010_20210609_1919.train.sl
+!cooked/20210609_1919/cooked_best2010_20210609_1919.train.vocab
+!cooked/20210609_1919/cooked_best2010_20210609_1919.valid.ab.vocab
+!cooked/20210609_1919/cooked_best2010_20210609_1919.valid.ne.vocab
+!cooked/20210609_1919/cooked_best2010_20210609_1919.valid.sl
+!cooked/20210609_1919/cooked_best2010_20210609_1919.valid.vocab
+!cooked/20210609_1919/cooked_best2010_20210609_1919.vocab
 
 # caches
 ######################

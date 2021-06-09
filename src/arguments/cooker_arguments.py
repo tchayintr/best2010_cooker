@@ -51,6 +51,9 @@ class CookerArgumentLoader(object):
             help=
             'Specify to deeply clean the input data (original data denoising) see README.md for more details'
         )
+        parser.add_argument('--gen_common_vocab',
+                            action='store_true',
+                            help='Specify to generate common vocabulary')
         parser.add_argument('--gen_ne_vocab',
                             action='store_true',
                             help='Specify to generate NE vocabulary')
